@@ -1,0 +1,19 @@
+ants:
+  SEED: 0
+  NUM_ANTS: 10000
+  INITIAL_POSITION: !!python/tuple [0.,0.]
+constraints:
+  FUNCTION: ellipse
+grid:
+  HEIGHT: 11
+  WIDTH: 11
+solution:
+  FIND_EXACT: True
+  MAX_POINTS: 1000
+tracking:
+  DO_TRACKING: True
+  PATH: output/history.csv
+  MAX_STEPS: 100
+  BASE_TRACK_INTERVAL: 1
+  SHOW_ANIMATION: False
+  WAIT_TIME: 500

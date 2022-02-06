@@ -1,10 +1,49 @@
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
 
 
 class Grid():
+    """
+    A class used to represent the grid to plot during the simulatios according to the ants positions
+
+    ...
+
+    Attributes
+    ----------
+    height : int
+        grid's height
+    width : int
+        grid's width
+    index : np.array
+        array with the y coordinates of the grid's points
+    columns : np.array
+        array with the x coordinates of the grid's points
+    default_value : float
+        default value used to initialize the grids values
+    default_grid : pd.DataFrame
+        starting grid before placing the ants
+    grid : pd.DataFrame
+        update grid with the ants
+    mask : pd.DataFrame
+        dataframe that represents the constraints with True values on the grid
+    font_plots : dict
+        parameters regarding the font of the plot to display
+
+
+    Methods
+    -------
+    initialize_grid()
+        Initializes the default grid
+    update_grid(constraints)
+        Updates the positions of the ants on the grid
+    initialize_mask(max_steps:int=None, ax=None, **plt_kwargs)
+        Initialize the mask regarding the problem constraints
+    plot(max_steps:int=None, ax=None, **plt_kwargs)
+        Plots a graph with the current ants positions on the grid
+    """
+    
+
     def __init__(self, height:int, width:int, default_value=np.nan, constraints=None) -> None:
         
         assert height>0
@@ -22,12 +61,20 @@ class Grid():
         self.mask = None
         self.mask = self.initialize_mask(constraints)
 
+        self.font_plots = {
+            'family': 'serif',
+            'color':  'darkred',
+            'weight': 'normal',
+            'size': 16,
+            }
+
 
     def initialize_grid(self):
         grid = np.full([self.height, self.width], self.default_value)
         grid = pd.DataFrame(data=grid, index=self.index, columns=self.columns)
         self.default_grid = grid
         return grid
+    
 
     def update_grid(self, changes, from_default=True):
         #if changes!=None:
@@ -44,6 +91,7 @@ class Grid():
 
         return self.grid
 
+    
     def initialize_mask(self, constraints):
         if constraints!=None:
             # create every possible combination between 2 arrays
@@ -63,9 +111,10 @@ class Grid():
             return mask
         return None
     
-    def plot(self, vmax=None, text:str=None, masked:bool=False):
-        
-        # add mask
+
+    def plot(self, vmax=None, text:str=None, masked:bool=False, ax=None, show_cbar=False):
+
+        # plot also the mask over the heatmap
         if masked:
             sns.heatmap(
                 data = self.mask, 
@@ -74,9 +123,10 @@ class Grid():
                 cmap = 'Blues', 
                 annot = False,
                 linewidths = 0.5,
-                cbar = False
+                cbar = False,
+                ax = ax
                 )
-        ax = sns.heatmap(
+        sns.heatmap(
             data = self.grid, 
             vmin = 0, 
             vmax = vmax, 
@@ -85,9 +135,12 @@ class Grid():
             linecolor='white',
             linewidths = 0.5, 
             xticklabels=True, 
-            yticklabels=True
+            yticklabels=True,
+            cbar = show_cbar,
+            ax = ax
             )
         
-        plt.text(self.width + self.width//2, self.height//2, text, fontsize=12)
-        plt.show()
+        ax.set_title("Ants Positions", fontdict=self.font_plots)
+        ax.text(self.width + self.width//4, self.height//2, text, fontsize=12)
+
         return ax
