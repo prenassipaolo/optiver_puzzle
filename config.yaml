@@ -15,5 +15,5 @@ tracking:
   PATH: output/history.csv
   MAX_STEPS: 100
   BASE_TRACK_INTERVAL: 1
-  SHOW_ANIMATION: False
+  SHOW_ANIMATION: True
   WAIT_TIME: 500

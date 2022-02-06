@@ -5,7 +5,6 @@ from utils import points_distance
 class Constraint():
     """
     A class used to represent the constraints
-
     ...
 
     Attributes

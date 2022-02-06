@@ -5,8 +5,8 @@ import seaborn as sns
 
 class Grid():
     """
-    A class used to represent the grid to plot during the simulatios according to the ants positions
-
+    A class used to represent the grid to plot during the simulatios
+    according to the ants positions.
     ...
 
     Attributes
