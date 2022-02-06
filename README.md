@@ -86,5 +86,5 @@ Beside the main tracking application, the scripts could print the exact solution
 **NOTE**: The implemented modules are extremely generic. They could be easily adapted to simulate many different tasks related to a 2D Random Walk.
 
 
-
+![Example final step](https://github.com/prenassipaolo/optiver_puzzle/blob/main/output/example_final_step.PNG)
 
